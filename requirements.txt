@@ -1,0 +1,6 @@
+pandas
+pandas-gbq
+tqdm
+musicbrainzngs
+dask[dataframe]
+pyarrow
