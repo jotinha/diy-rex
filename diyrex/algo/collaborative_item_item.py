@@ -1,4 +1,4 @@
-from dyirex.algo import similarity, get_products_from_user
+from diyrex.algo import similarity, get_products_from_user
 
 
 def related(product, products):

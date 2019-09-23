@@ -1,6 +1,6 @@
 from typing import Iterator
 
-from dyirex.algo import similarity, get_products_from_user
+from diyrex.algo import similarity, get_products_from_user
 
 def recommend(user, users) -> Iterator:
     "recommend products from similar users that the user never saw"
