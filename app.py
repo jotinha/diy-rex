@@ -35,7 +35,7 @@ R
 # %%
 
 #do some checks
-user, item, rating = ratings.iloc[0]
+user, item, rating = ratings.sample(1).iloc[0]
 i = users.index(user)
 j = items.index(item)
 
@@ -60,8 +60,28 @@ print('\n'.join(most_popular(ratings,10)))
 ## User-user collaborative filtering
 """
 
-from diyrex.algo.collaborative_user_user import recommend
+from diyrex.algo.collaborative import recommend_user_user_cf
 
-print(f"\n* Recs form user {users[i]}")
-for k, r in islice(recommend(i, R), 10):
+print(f"\n* Recs for user {users[i]}")
+for k, r in islice(recommend_user_user_cf(i, R), 10):
+    print(items[k], r)
+
+# %%
+"""
+## Related items
+"""
+from diyrex.algo.collaborative import related
+print(f"\n* Items related to: {items[j]}")
+for k, r in islice(related(j, R), 10):
+    print(items[k], r)
+
+
+# %%
+"""
+## Item-item collaborative filtering
+"""
+
+from diyrex.algo.collaborative import recommend_item_item_cf
+print(f"\n* Recs for user: {users[i]}")
+for k, r in islice(recommend_item_item_cf(i, R), 10):
     print(items[k], r)
