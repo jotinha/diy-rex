@@ -24,3 +24,11 @@ j = R.cols.index(item)
 
 assert R.matrix[i,j] == rating
 
+#recommend
+from diyrex.algo.popular import most_highly_rated, most_popular
+
+print("\n# Most highly rated:")
+print('\n'.join(most_highly_rated(ratings,10)))
+
+print("\n# Most popular:")
+print('\n'.join(most_popular(ratings,10)))
