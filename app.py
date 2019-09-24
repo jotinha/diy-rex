@@ -1,3 +1,5 @@
+from itertools import islice
+
 from diyrex.data import load, stats
 from diyrex import ratings
 from diyrex.matrix import table_to_sparse_matrix
@@ -60,4 +62,6 @@ print('\n'.join(most_popular(ratings,10)))
 
 from diyrex.algo.collaborative_user_user import recommend
 
-recommend()
+print(f"\n* Recs form user {users[i]}")
+for k, r in islice(recommend(i, R), 10):
+    print(items[k], r)

@@ -1,16 +1,15 @@
-from typing import Iterator
+from scipy.sparse import spmatrix
+from typing import Iterator, Tuple
 
-from diyrex.algo import similarity, get_products_from_user, User
-from diyrex.matrix import Matrix
+from diyrex.algo import similarity, get_items_from_user
 
 
-def recommend(user : User, R : Matrix) -> Iterator:
+def recommend(i : int, R : spmatrix, min_score = 0.9) -> Iterator[Tuple[int,float]]:
     "recommend products from similar users that the user never saw"
 
-
-    for other_user in R.row_names:
-        if similarity(user, R.get_row_vector()) > 0.9:
-            for product in get_products_from_user(other_user):
-                if product not in get_products_from_user(user):
-                    yield product
+    for j in range(R.shape[0]):
+        if similarity(R[i], R[j]) > min_score:
+            for product in get_items_from_user(j, R):
+                if product not in get_items_from_user(i, R):
+                    yield product, R[j,product]
 
