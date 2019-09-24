@@ -1,5 +1,14 @@
 from diyrex.data import load, stats
+from diyrex.ratings import compute_implicit_ratings
 
-df = load('data/listenbrainz/parsed/sample.csv')
+signals = load('data/listenbrainz/parsed/sample.csv')
 
-stats(df)
+ratings = compute_implicit_ratings(signals)
+
+print("\nsignals:")
+stats(signals)
+print(signals)
+
+print("\nratings:")
+stats(ratings)
+print(ratings)
