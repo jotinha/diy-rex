@@ -27,17 +27,17 @@ ratings
 ## Convert to matrix
 """
 
-R = table_to_sparse_matrix(ratings)
-print(R)
+R, users, items = table_to_sparse_matrix(ratings)
+R
 
 # %%
 
 #do some checks
 user, item, rating = ratings.iloc[0]
-i = R.row_names.index(user)
-j = R.col_names.index(item)
+i = users.index(user)
+j = items.index(item)
 
-assert R.matrix[i,j] == rating
+assert R[i,j] == rating
 
 
 # %%

@@ -1,15 +1,25 @@
-from typing import Iterator
+from scipy.sparse import spmatrix,csr_matrix
+from scipy.spatial.distance import cosine
+from typing import List
+import numpy as np
 
-from diyrex.matrix import Vector
+def similarity(v1: spmatrix, v2: spmatrix) -> float:
+    """
+        >>> R = csr_matrix([[1,0,1],[1,1,0]])
+        >>> similarity(R[0],R[1])
+        0.5
+    """
+    assert v1.shape == v2.shape
+    return cosine(v1.A.flatten(), v2.A.flatten())
 
-class User(Vector):
-    pass
+def get_items_from_user(i: int, R: spmatrix) -> List:
+    """
+    >>> R = csr_matrix([[1,0,0],[0,1,0],[1,1,0]])
+    >>> get_items_from_user(0, R)
+    [0]
+    >>> get_items_from_user(2, R)
+    [0, 1]
 
-class Product(Vector):
-    pass
-
-def similarity(user1 : User, user2 : User) -> float:
-    return user1.matrix * user2.matrix.T
-
-def get_products_from_user(user : User, R) -> Iterator:
-    raise NotImplementedError
+    """
+    assert isinstance(R, csr_matrix)
+    return R[i].indices.tolist()
