@@ -2,3 +2,4 @@
 /.idea
 *.csv
 *.parquet
+.ipynb_checkpoints
