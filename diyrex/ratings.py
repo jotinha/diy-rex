@@ -1,10 +1,15 @@
 import numpy as np
 import pandas
+import tqdm
 from typing import Callable
+
+from diyrex.cache import caching
+
+tqdm.tqdm_pandas(tqdm.tqdm)  # progress bars for groupby
 
 
 def compute_implicit_ratings(signals: pandas.DataFrame, agg_func: Callable):
-    ratings = signals.groupby(['user', 'item']).apply(agg_func)
+    ratings = signals.groupby(['user', 'item']).progress_apply(agg_func)
 
     # normalize
     ratings /= ratings.max()
@@ -22,6 +27,7 @@ def compute_implicit_ratings_2(signals: pandas.DataFrame):
     return compute_implicit_ratings(signals, lambda g: g['date'].dt.date.nunique())
 
 
+@caching.cache
 def compute_implicit_ratings_3(signals: pandas.DataFrame):
     "rating is an exponentially decaying function relative to a reference date"
 
@@ -33,4 +39,5 @@ def compute_implicit_ratings_3(signals: pandas.DataFrame):
 
     decay = lambda t: np.exp(-λ * (t - t0).days / t_half)
 
-    return compute_implicit_ratings(signals, lambda g: g['date'].apply(decay).max())
+    # g['date'].apply(decay).max() is equiv to decay(g['date'].min())
+    return compute_implicit_ratings(signals, lambda g: decay(g['date'].min()))

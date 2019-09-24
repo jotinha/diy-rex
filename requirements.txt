@@ -5,3 +5,5 @@ musicbrainzngs
 dask[dataframe]
 pyarrow
 scipy
+joblib
+tqdm

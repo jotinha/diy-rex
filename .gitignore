@@ -3,3 +3,4 @@
 *.csv
 *.parquet
 .ipynb_checkpoints
+/.cache
