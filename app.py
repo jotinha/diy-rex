@@ -25,7 +25,7 @@ signals
 ## Convert to ratings
 """
 
-ratings = ratings.compute_implicit_ratings_3(signals)
+ratings = ratings.compute_implicit_ratings(signals)
 print("\nratings:")
 stats(ratings)
 ratings
@@ -49,9 +49,6 @@ assert items[j] == "Metallica"
 
 assert R[i,j] == np.float32(rating)
 
-preview(get_items_from_user(i, R), items, n=10, title=f"Top rated items for '{users[i]}'")
-
-
 # %%
 """
 ## Most popular
@@ -59,11 +56,17 @@ preview(get_items_from_user(i, R), items, n=10, title=f"Top rated items for '{us
 
 from diyrex.algo.popular import most_highly_rated, most_popular
 
-print("\n* Most highly rated:")
-print('\n'.join(most_highly_rated(ratings,10)))
+preview((items.index(item) for item in most_highly_rated(ratings)), items, title="Top ratings for everyone")
+preview((items.index(item) for item in most_popular(ratings)), items, title="Most popular")
 
-print("\n* Most popular:")
-print('\n'.join(most_popular(ratings,10)))
+
+# %%
+"""
+## Personalized recs
+"""
+
+preview(get_items_from_user(i, R), items, n=10, title=f"Top rated items for '{users[i]}'")
+
 
 # %%
 """
@@ -74,6 +77,7 @@ from diyrex.algo.collaborative import recommend_user_user_cf
 
 preview(recommend_user_user_cf(i, R), items, title=f"User-User CF for '{users[i]}'")
 
+
 # %%
 """
 ## Related items
@@ -81,6 +85,7 @@ preview(recommend_user_user_cf(i, R), items, title=f"User-User CF for '{users[i]
 from diyrex.algo.collaborative import related
 
 preview(related(j, R), items, title=f"Items related to '{items[j]}'")
+
 
 
 # %%
@@ -91,6 +96,8 @@ preview(related(j, R), items, title=f"Items related to '{items[j]}'")
 from diyrex.algo.collaborative import recommend_item_item_cf
 
 preview(recommend_item_item_cf(i, R), items, title=f"Item-Item CF for user '{users[i]}'")
+
+
 
 # %%
 """
@@ -111,7 +118,9 @@ assert items == items2
 from diyrex.algo.content import similar, recommend_content_based
 
 preview(similar(i,I),items,title=f"Similar to item: {items[j]}")
-preview(recommend_content_based(i,R, S),items,title=f"Content-based recs for user: {users[i]}")
+preview(recommend_content_based(i,R, I),items,title=f"Content-based recs for user: {users[i]}")
+
+
 
 # %%
 """
