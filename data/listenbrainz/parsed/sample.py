@@ -1,9 +1,5 @@
 import pandas as pd
 
-DATE_COL = 'listened_at'
-USER_COL = 'user_name'
-ITEM_COL = 'artist_name'
-
 df = pd.read_csv('data.csv')
 
 user_count : pd.Series = df.groupby('user')['item'].nunique()
