@@ -1,8 +1,13 @@
 from itertools import islice
 
-from diyrex.data import load, stats
+import numpy as np
+
+from diyrex.data import load_signals, stats
 from diyrex import ratings
 from diyrex.matrix import table_to_sparse_matrix
+
+np.random.seed(123)
+
 
 # %%
 """
@@ -39,7 +44,7 @@ user, item, rating = ratings.sample(1).iloc[0]
 i = users.index(user)
 j = items.index(item)
 
-assert R[i,j] == rating
+assert R[i,j] == np.float32(rating)
 
 
 # %%

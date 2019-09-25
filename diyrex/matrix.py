@@ -13,7 +13,7 @@ def table_to_sparse_matrix(ratings: pandas.DataFrame) -> (sp.spmatrix, List, Lis
     users = ratings['user'].cat.categories.values
     items = ratings['item'].cat.categories.values
 
-    mat = sp.coo_matrix((data, (i, j)))
+    mat = sp.coo_matrix((data, (i, j)), dtype='float32')
     mat = mat.tocsr()
     return mat, list(users), list(items)
 
