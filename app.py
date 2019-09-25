@@ -1,8 +1,9 @@
 from itertools import islice
 
 import numpy as np
+import pandas as pd
 
-from diyrex.data import load_signals, stats
+from diyrex.data import load, stats
 from diyrex import ratings
 from diyrex.matrix import table_to_sparse_matrix
 
@@ -13,7 +14,7 @@ np.random.seed(123)
 """
 ## Load signals
 """
-signals = load('data/listenbrainz/parsed/sample.csv')
+signals = load('data/listenbrainz/parsed/data.csv', ['date','user','item'])
 
 print("\nsignals:")
 stats(signals)
@@ -34,7 +35,7 @@ ratings
 ## Convert to matrix
 """
 
-R, users, items = table_to_sparse_matrix(ratings)
+R, users, items = table_to_sparse_matrix(ratings, 'user', 'item', 'rating')
 R
 
 # %%
@@ -102,3 +103,17 @@ S = self_similarity_matrix(R.T)
 print(f"\n* Recs for user: {users[i]}")
 for k,r in recommend_with_S(i, R, S):
     print(items[k], r)
+
+# %%
+"""
+## Content based
+"""
+
+content = load('data/listenbrainz/parsed/content.csv',  ['item','feature','value'])
+
+# item category codes must be the same so the matrices are aligned
+content['item'].cat.reorder_categories(items, inplace=True)
+
+assert all(content.item.cat.categories == signals.item.cat.categories)
+
+I = table_to_sparse_matrix(content, 'item', 'feature', 'value')

@@ -3,15 +3,15 @@ from scipy import sparse as sp
 from typing import List
 
 
-def table_to_sparse_matrix(ratings: pandas.DataFrame) -> (sp.spmatrix, List, List):
-    assert ratings['user'].dtype == 'category' and ratings['item'].dtype == 'category'
+def table_to_sparse_matrix(ratings: pandas.DataFrame, x : str, y : str, v: str) -> (sp.spmatrix, List, List):
+    assert ratings[x].dtype == 'category' and ratings[y].dtype == 'category'
 
-    i = ratings['user'].cat.codes
-    j = ratings['item'].cat.codes
-    data = ratings['rating'].values
+    i = ratings[x].cat.codes
+    j = ratings[y].cat.codes
+    data = ratings[v].values
 
-    users = ratings['user'].cat.categories.values
-    items = ratings['item'].cat.categories.values
+    users = ratings[x].cat.categories.values
+    items = ratings[y].cat.categories.values
 
     mat = sp.coo_matrix((data, (i, j)), dtype='float32')
     mat = mat.tocsr()
