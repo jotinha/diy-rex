@@ -1,4 +1,6 @@
-from scipy.sparse import spmatrix,csr_matrix
+import numpy as np
+
+from scipy.sparse import spmatrix, csr_matrix
 from scipy.spatial.distance import cosine
 from typing import List
 
@@ -10,7 +12,8 @@ def similarity(v1: spmatrix, v2: spmatrix) -> float:
         0.5
     """
     assert v1.shape == v2.shape
-    return cosine(v1.A.flatten(), v2.A.flatten())
+    return 1 - cosine(v1.A.flatten(), v2.A.flatten())
+
 
 def get_items_from_user(i: int, R: spmatrix) -> List:
     """
@@ -22,5 +25,6 @@ def get_items_from_user(i: int, R: spmatrix) -> List:
 
     """
     assert isinstance(R, csr_matrix)
-    return R[i].indices.tolist()
-
+    scores = R[i].data
+    idxs = R[i].indices
+    return idxs[np.argsort(-scores)]

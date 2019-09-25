@@ -3,7 +3,7 @@ import pandas
 import tqdm
 from typing import Callable
 
-from diyrex.cache import caching
+from diyrex.cache import cacher
 
 tqdm.tqdm_pandas(tqdm.tqdm)  # progress bars for groupby
 
@@ -27,7 +27,7 @@ def compute_implicit_ratings_2(signals: pandas.DataFrame):
     return compute_implicit_ratings(signals, lambda g: g['date'].dt.date.nunique())
 
 
-@caching.cache
+@cacher.cache
 def compute_implicit_ratings_3(signals: pandas.DataFrame):
     "rating is an exponentially decaying function relative to a reference date"
 
