@@ -116,4 +116,16 @@ content['item'].cat.reorder_categories(items, inplace=True)
 
 assert all(content.item.cat.categories == signals.item.cat.categories)
 
-I = table_to_sparse_matrix(content, 'item', 'feature', 'value')
+I,items2,features = table_to_sparse_matrix(content, 'item', 'feature', 'value')
+
+assert items == items2
+
+from diyrex.algo.content import similar, recommend_content_based
+
+print(f"\n* Similar to item: {items[j]}")
+for k, r in islice(similar(i, I), 10):
+    print(items[k], r)
+
+print(f"\n* Recs for user: {users[i]}")
+for k, r in islice(recommend_content_based(i, R), 10):
+    print(items[k], r)

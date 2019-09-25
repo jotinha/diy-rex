@@ -1,3 +1,16 @@
+## TODO
+* espaço no disco
+* testar gravar
+* levar o micro
+
+* Remove scores or make a standard recommendations class
+* ALS (https://towardsdatascience.com/prototyping-a-recommender-system-step-by-step-part-2-alternating-least-square-als-matrix-4a76c58714a1)
+* multiplications as a more efficient algorithm
+* content based similarity
+* solving the sparsity issue
+* cold start
+* clean code
+
 ## Useful datasets
 * github
 * hacker news
