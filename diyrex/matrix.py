@@ -2,6 +2,7 @@ import pandas
 from scipy import sparse as sp
 from typing import List
 
+
 def table_to_sparse_matrix(ratings: pandas.DataFrame) -> (sp.spmatrix, List, List):
     assert ratings['user'].dtype == 'category' and ratings['item'].dtype == 'category'
 
@@ -15,3 +16,4 @@ def table_to_sparse_matrix(ratings: pandas.DataFrame) -> (sp.spmatrix, List, Lis
     mat = sp.coo_matrix((data, (i, j)))
     mat = mat.tocsr()
     return mat, list(users), list(items)
+

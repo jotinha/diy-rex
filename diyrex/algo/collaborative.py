@@ -29,3 +29,5 @@ def recommend_item_item_cf(i : int, R : spmatrix, min_score = 0.9) -> Iterator[T
     for product in get_items_from_user(i, R):
         for other_product, related_score in related(product, R):
             yield other_product, related_score
+
+

@@ -85,3 +85,15 @@ from diyrex.algo.collaborative import recommend_item_item_cf
 print(f"\n* Recs for user: {users[i]}")
 for k, r in islice(recommend_item_item_cf(i, R), 10):
     print(items[k], r)
+
+# %%
+"""
+## Efficient item-item collaborative filtering
+"""
+
+from diyrex.algo.efficient import self_similarity_matrix, recommend_with_S
+
+S = self_similarity_matrix(R.T)
+print(f"\n* Recs for user: {users[i]}")
+for k,r in recommend_with_S(i, R, S):
+    print(items[k], r)

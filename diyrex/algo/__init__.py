@@ -1,7 +1,7 @@
 from scipy.sparse import spmatrix,csr_matrix
 from scipy.spatial.distance import cosine
 from typing import List
-import numpy as np
+
 
 def similarity(v1: spmatrix, v2: spmatrix) -> float:
     """
@@ -23,3 +23,4 @@ def get_items_from_user(i: int, R: spmatrix) -> List:
     """
     assert isinstance(R, csr_matrix)
     return R[i].indices.tolist()
+
